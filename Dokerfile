@@ -1,0 +1,18 @@
+ARG NGINX_VERSION
+
+FROM nginx:${NGINX_VERSION}
+
+#Define build-time argument for name
+
+ARG NAME
+
+#replace default.conf
+
+COPY default.conf /etc/nginx/conf.d/default.conf
+#replace defult 'index.html'
+
+ COPY index.html /var/www/html/index.html
+#echo the build argument
+RUN echo "the name is ${NAME}"
+RUN sed -i "s/{NAME}/${NAME}/g" /var/www/html/index.html
+RUN sed -i "s/{NGINX_VERSION}/${NGINX_VERSION}/g" /var/www/html/index.html
